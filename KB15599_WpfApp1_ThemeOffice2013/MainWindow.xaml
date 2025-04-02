@@ -1,0 +1,199 @@
+<Window x:Class="KB15599_WpfApp1_ThemeOffice2013.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:igWindows="http://infragistics.com/Windows"
+        xmlns:igRibbon="http://infragistics.com/Ribbon"
+        xmlns:local="clr-namespace:KB15599_WpfApp1_ThemeOffice2013"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <igRibbon:XamRibbon
+            x:Name="xamRibbon1"
+            Theme="Office2013">
+            <igRibbon:XamRibbon.Resources>
+
+                <!-- 1つめ: ApplicationMenu オブジェクトを非表示にする。 -->
+                <Style TargetType="{x:Type igRibbon:ApplicationMenu}">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                </Style>
+
+                <!-- https://github.com/Infragistics/wpf-resources/blob/66f310ae7e1e10eca79941076220042e7f8bc12d/DefaultStyles/Ribbon/RibbonOffice2013.xaml からコピー (ここから) -->
+                <!-- =================================================================== -->
+                <!-- Ribbon's XamTabControl Style -->
+                <!-- =================================================================== -->
+                <Style x:Key="{x:Static igRibbon:XamRibbon.RibbonTabControlStyleKey}" TargetType="{x:Type igWindows:XamTabControl}">
+                    <Setter Property="Background" Value="{DynamicResource {x:Static igRibbon:RibbonBrushKeys.ContainerFillKey}}"/>
+                    <Setter Property="BorderBrush" Value="{DynamicResource {x:Static igRibbon:RibbonBrushKeys.ContainerBorderFillKey}}"/>
+                    <Setter Property="BorderThickness" Value="0,1"/>
+                    <Setter Property="Padding" Value="0,2,0,0"/>
+                    <Setter Property="Margin" Value="0"/>
+                    <Setter Property="MaximumSizeToFitAdjustment" Value="18"/>
+                    <Setter Property="MinimumTabExtent" Value="28"/>
+                    <Setter Property="PreTabItemContentTemplate">
+                        <Setter.Value>
+                            <DataTemplate>
+                                <!-- 2 つめ: ApplicationMenu オブジェクトの描画用に確保されている領域を非表示にする。 -->
+                                <Rectangle Width="56" Height="19" Visibility="Collapsed"/>
+                            </DataTemplate>
+                        </Setter.Value>
+                    </Setter>
+                    <Setter Property="KeyboardNavigation.DirectionalNavigation" Value="Continue"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type igWindows:XamTabControl}">
+                                <Grid ClipToBounds="True" KeyboardNavigation.TabNavigation="Local">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition x:Name="gridRow0" Height="Auto"/>
+                                        <RowDefinition x:Name="gridRow1" Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <Border
+							x:Name="ContentPanel"
+							Grid.Row="1"
+							Background="{TemplateBinding Background}"
+							BorderBrush="{TemplateBinding BorderBrush}"
+							BorderThickness="{TemplateBinding BorderThickness}"
+							KeyboardNavigation.DirectionalNavigation="Continue"
+							KeyboardNavigation.TabIndex="2"
+							KeyboardNavigation.TabNavigation="Local"
+							SnapsToDevicePixels="True"
+							Visibility="Visible">
+                                        <ContentPresenter
+								x:Name="PART_SelectedContentHost"
+								Height="{TemplateBinding TabItemContentHeight}"
+								Margin="{TemplateBinding Padding}"
+								Content="{TemplateBinding SelectedContent}"
+								ContentSource="SelectedContent"
+								ContentTemplate="{TemplateBinding SelectedContentTemplate}"
+								SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+								/>
+                                    </Border>
+                                    <DockPanel
+							x:Name="PART_HeaderArea"
+							Panel.ZIndex="1"
+							Background="{DynamicResource {x:Static igRibbon:RibbonBrushKeys.RibbonTabControlHeaderPanelBackgroundKey}}"
+							SnapsToDevicePixels="True">
+                                        <ContentPresenter
+								x:Name="PreTabItemContent"
+								Content="{TemplateBinding PreTabItemContent}"
+								ContentTemplate="{TemplateBinding PreTabItemContentTemplate}"
+								ContentTemplateSelector="{TemplateBinding PreTabItemContentTemplateSelector}"
+								KeyboardNavigation.DirectionalNavigation="Continue"
+                                KeyboardNavigation.TabIndex="0" 
+								DockPanel.Dock="Left"/>
+                                        <ContentPresenter
+								x:Name="PostTabItemContent"
+								Content="{TemplateBinding PostTabItemContent}"
+								ContentTemplate="{TemplateBinding PostTabItemContentTemplate}"
+								ContentTemplateSelector="{TemplateBinding PostTabItemContentTemplateSelector}"
+                                KeyboardNavigation.TabIndex="2" 
+								KeyboardNavigation.TabNavigation="Continue"
+								DockPanel.Dock="Right"/>
+                                        <igWindows:XamPager
+								x:Name="PART_TabItemScrollViewer"
+								CanContentScroll="True"
+								Focusable="False"
+								KeyboardNavigation.DirectionalNavigation="Continue"
+								KeyboardNavigation.TabIndex="1"
+								KeyboardNavigation.TabNavigation="Local"
+								ScrollLeftButtonStyle="{DynamicResource {x:Static igRibbon:RibbonGroupCollection.PagerScrollLeftButtonStyleKey}}"
+								ScrollRightButtonStyle="{DynamicResource {x:Static igRibbon:RibbonGroupCollection.PagerScrollRightButtonStyleKey}}"
+								ScrollViewer.HorizontalScrollBarVisibility="{TemplateBinding TabItemHorizontalScrollBarVisibility}"
+								ScrollViewer.VerticalScrollBarVisibility="{TemplateBinding TabItemVerticalScrollBarVisibility}">
+                                            <ItemsPresenter x:Name="PART_TabHeaderPanel" Margin="2,0,2,0" KeyboardNavigation.TabNavigation="Once"/>
+                                        </igWindows:XamPager>
+                                    </DockPanel>
+                                    <Popup
+							x:Name="PART_Popup"
+							Width="{TemplateBinding PreferredDropDownExtent}"
+							AllowsTransparency="True"
+							CustomPopupPlacementCallback="{TemplateBinding PreferredDropDownPlacementCallback}"
+							igWindows:PopupHelper.HandleMouseDownOnClose="True"
+							IsOpen="{Binding IsDropDownOpen, RelativeSource={RelativeSource TemplatedParent}}"
+							Placement="Custom"
+							SnapsToDevicePixels="True"
+							StaysOpen="False">
+                                        <AdornerDecorator>
+                                            <Border
+									Background="{DynamicResource {x:Static igRibbon:RibbonBrushKeys.RibbonTabControlHeaderPanelBackgroundKey}}"
+									KeyboardNavigation.DirectionalNavigation="Continue"
+									KeyboardNavigation.TabIndex="2"
+									KeyboardNavigation.TabNavigation="Local"
+									SnapsToDevicePixels="True">
+                                                <Border
+                                        x:Name="PopupContentBorder"
+										Background="{TemplateBinding Panel.Background}"
+										BorderBrush="{DynamicResource {x:Static igRibbon:RibbonBrushKeys.ContainerBorderFillKey}}"
+										BorderThickness="0,1"
+										SnapsToDevicePixels="True">
+                                                    <ContentPresenter
+											x:Name="PART_SelectedContentHostMinimized"
+											Height="{TemplateBinding TabItemContentHeight}"
+											HorizontalAlignment="{Binding HorizontalAlignment, ElementName=PART_SelectedContentHost}"
+											Margin="{TemplateBinding Padding}"
+											VerticalAlignment="{Binding VerticalAlignment, ElementName=PART_SelectedContentHost}"
+											Content="{x:Null}"
+											ContentSource="SelectedContent"
+											ContentTemplate="{TemplateBinding SelectedContentTemplate}"
+											SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                                                </Border>
+                                            </Border>
+                                        </AdornerDecorator>
+                                    </Popup>
+                                </Grid>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsDropDownOpen" Value="False">
+                                        <Setter TargetName="PART_Popup" Property="PopupAnimation" Value="Fade"/>
+                                    </Trigger>
+                                    <Trigger Property="IsEnabled" Value="False">
+                                        <Setter Property="TextElement.Foreground" Value="{DynamicResource {x:Static igRibbon:RibbonBrushKeys.GrayTextBrushKey}}"/>
+                                    </Trigger>
+                                    <Trigger Property="IsMinimized" Value="True">
+                                        <Setter TargetName="PART_SelectedContentHostMinimized" Property="Content" Value="{Binding SelectedContent, RelativeSource={RelativeSource TemplatedParent}}"/>
+                                        <Setter TargetName="ContentPanel" Property="Visibility" Value="Collapsed"/>
+                                        <Setter TargetName="PART_SelectedContentHost" Property="Content" Value="{x:Null}"/>
+                                        <Setter Property="Grid.RowSpan" TargetName="PART_HeaderArea" Value="2" />
+                                    </Trigger>
+                                    <Trigger Property="igRibbon:XamRibbon.IsSelectedItemInContextualTabGroup" Value="True">
+                                    </Trigger>
+                                    <MultiDataTrigger>
+                                        <MultiDataTrigger.Conditions>
+                                            <Condition Binding="{Binding Path=(igRibbon:XamRibbon.IsWithinRibbonWindow), RelativeSource={x:Static RelativeSource.Self}}" Value="True" />
+                                            <Condition Binding="{Binding Path=(igRibbon:XamRibbon.IsGlassActive), RelativeSource={x:Static RelativeSource.Self}}" Value="False" />
+                                            <Condition Binding="{Binding Path=IsActive, RelativeSource={RelativeSource FindAncestor, {x:Type Window}, 1}}" Value="False" />
+                                        </MultiDataTrigger.Conditions>
+                                        <Setter Property="Background" TargetName="PART_HeaderArea" Value="{DynamicResource {x:Static igRibbon:RibbonBrushKeys.CaptionPanelInactiveFillKey}}" />
+                                    </MultiDataTrigger>
+                                    <Trigger Property="igRibbon:XamRibbon.IsGlassActive" Value="False">
+                                        <Setter Property="BorderThickness" Value="0,1" />
+                                        <Setter Property="BorderThickness" TargetName="PopupContentBorder" Value="1" />
+                                    </Trigger>
+                                    <Trigger Property="igRibbon:XamRibbon.IsGlassActive" Value="True">
+                                        <Setter Property="Background" TargetName="PART_HeaderArea" Value="{DynamicResource {x:Static igRibbon:RibbonBrushKeys.RibbonTabControlHeaderPanelGlassBackgroundKey}}" />
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                    <!--<Style.Triggers>
+            <Trigger Property="IsMinimized" Value="True">
+                <Setter Property="Height" Value="24"/>
+            </Trigger>
+        </Style.Triggers>-->
+                </Style>
+                <!-- https://github.com/Infragistics/wpf-resources/blob/66f310ae7e1e10eca79941076220042e7f8bc12d/DefaultStyles/Ribbon/RibbonOffice2013.xaml からコピー (ここまで) -->
+            </igRibbon:XamRibbon.Resources>
+            <igRibbon:XamRibbon.Tabs>
+                <igRibbon:RibbonTabItem Header="TabItem1">
+                    <igRibbon:RibbonGroup Caption="RibbonGroup1" Id="ribbonGroup1" Width="100"/>
+                    <igRibbon:RibbonGroup Caption="RibbonGroup2" Id="ribbonGroup2" Width="100"/>
+                </igRibbon:RibbonTabItem>
+                <igRibbon:RibbonTabItem Header="TabItem2">
+                    <igRibbon:RibbonGroup Caption="RibbonGroupA" Id="ribbonGroupA" Width="150"/>
+                    <igRibbon:RibbonGroup Caption="RibbonGroupB" Id="ribbonGroupB" Width="150"/>
+                </igRibbon:RibbonTabItem>
+            </igRibbon:XamRibbon.Tabs>
+        </igRibbon:XamRibbon>
+    </Grid>
+</Window>
